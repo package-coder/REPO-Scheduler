@@ -18,6 +18,7 @@ import Scheduler from './calendar';
 const drawerWidth = 220;
 
 export default function ClippedDrawer() {
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

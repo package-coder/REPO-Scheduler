@@ -1,8 +1,10 @@
+import { Toolbar } from '@mui/material';
 import type { BadgeProps } from 'antd';
 import { Badge, Calendar, Alert } from 'antd';
 import type { Moment } from 'moment';
 import moment from 'moment';
 import React, { useState } from 'react';
+import AppModal from './appModal';
 
 const getListData = (value: Moment) => {
   let listData;
@@ -45,10 +47,16 @@ const Scheduler: React.FC = () => {
 
   const [value, setValue] = useState(moment());
   const [selectedValue, setSelectedValue] = useState(moment());
+  const [showModal, setShowModal] = useState(false);
+
+  function handleCloseModal(){
+    setShowModal(false);
+  }
 
   const onSelect = (newValue: Moment) => {
     setValue(newValue);
     setSelectedValue(newValue);
+    setShowModal(true);
   };
 
   const onPanelChange = (newValue: Moment) => {
@@ -67,17 +75,28 @@ const Scheduler: React.FC = () => {
 
   const dateCellRender = (value: Moment) => {
     const listData = getListData(value);
+
     return (
-      <ul className="events">
+      <>
         {listData.map(item => (
             <Badge status={item.type as BadgeProps['status']} text={item.content} />
         ))}
-      </ul>
+      </>
     );
   };
 
   return <>
-    <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
+    <Calendar 
+      value={value} 
+      onSelect={onSelect} 
+      onPanelChange={onPanelChange} 
+      dateCellRender={dateCellRender} 
+      monthCellRender={monthCellRender} 
+    />
+    <AppModal 
+      show={showModal} 
+      handleClose={handleCloseModal} 
+    />
   </>
 };
 
