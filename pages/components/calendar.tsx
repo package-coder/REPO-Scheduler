@@ -6,35 +6,23 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import AppModal from './appModal';
 
+const dates = [
+  moment().add(1, 'day'),
+  moment().add(3, 'days'),
+  moment().add(1, 'week')
+]
+
 const getListData = (value: Moment) => {
-  let listData;
-  switch (value.date()) {
-    case 8:
-      listData = [
-        { type: 'warning', content: 'This is warning event.' },
-        { type: 'success', content: 'This is usual event.' },
-      ];
-      break;
-    case 10:
-      listData = [
-        { type: 'warning', content: 'This is warning event.' },
-        { type: 'success', content: 'This is usual event.' },
-        { type: 'error', content: 'This is error event.' },
-      ];
-      break;
-    case 15:
-      listData = [
-        { type: 'warning', content: 'This is warning event' },
-        { type: 'success', content: 'This is very long usual event。。....' },
-        { type: 'error', content: 'This is error event 1.' },
-        { type: 'error', content: 'This is error event 2.' },
-        { type: 'error', content: 'This is error event 3.' },
-        { type: 'error', content: 'This is error event 4.' },
-      ];
-      break;
-    default:
-  }
-  return listData || [];
+  let now = moment();
+  now = now.add(1, 'd');
+  console.log(now)
+
+
+  const data = dates.filter(date => date.isSame(value, "date"))
+  if(data != [])
+    return [ { type: 'success', content: 'This is usual event.' }]
+
+  return [];
 };
 
 const getMonthData = (value: Moment) => {
@@ -47,16 +35,17 @@ const Scheduler: React.FC = () => {
 
   const [value, setValue] = useState(moment());
   const [selectedValue, setSelectedValue] = useState(moment());
-  const [showModal, setShowModal] = useState(false);
+  const [modal, setModal] = useState(false);
 
-  function handleCloseModal(){
-    setShowModal(false);
+
+  const onClose = () => {
+    setModal(false);
   }
-
   const onSelect = (newValue: Moment) => {
     setValue(newValue);
     setSelectedValue(newValue);
-    setShowModal(true);
+    setModal(true);
+    console.log(newValue)
   };
 
   const onPanelChange = (newValue: Moment) => {
@@ -93,10 +82,14 @@ const Scheduler: React.FC = () => {
       dateCellRender={dateCellRender} 
       monthCellRender={monthCellRender} 
     />
+    
     <AppModal 
-      show={showModal} 
-      handleClose={handleCloseModal} 
-    />
+      show={modal} 
+      handleClose={onClose}
+      title={selectedValue.format('MMMM D, YYYY')}
+    >
+      <div>{selectedValue.toString()}</div>
+    </AppModal>
   </>
 };
 

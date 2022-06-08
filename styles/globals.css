@@ -15,3 +15,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.ant-modal-wrap {
+  bottom: unset;
+  left: unset;
+  overflow: unset;
+  right: 40px;
+}
