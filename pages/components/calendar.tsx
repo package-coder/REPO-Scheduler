@@ -7,21 +7,23 @@ import React, { useState } from 'react';
 import AppModal from './appModal';
 
 const dates = [
-  moment().add(1, 'day'),
-  moment().add(3, 'days'),
-  moment().add(1, 'week')
+  {
+    date: moment().add(1, 'day'),
+    content: { type: 'success', content: 'Shopping' }
+  },
+  {
+    date: moment().add(3, 'days'),
+    content: { type: 'success', content: 'Meeting with clients' }
+  },
+  {
+    date:moment().add(-1, 'week'),
+    content: { type: 'success', content: 'Homework' }
+  },
 ]
 
 const getListData = (value: Moment) => {
-  let now = moment();
-  now = now.add(1, 'd');
-  console.log(now)
-
-
-  const data = dates.filter(date => date.isSame(value, "date"))
-  if(data != [])
-    return [ { type: 'success', content: 'This is usual event.' }]
-
+  const date = dates.find(item => item.date.isSame(value, "date"));
+  if(date) return [date.content];
   return [];
 };
 
@@ -37,6 +39,9 @@ const Scheduler: React.FC = () => {
   const [selectedValue, setSelectedValue] = useState(moment());
   const [modal, setModal] = useState(false);
 
+  function getDate<Moment>(date: Moment) {
+    return dates.find(item => item.date.isSame(date, 'date'))
+  }
 
   const onClose = () => {
     setModal(false);
@@ -45,7 +50,6 @@ const Scheduler: React.FC = () => {
     setValue(newValue);
     setSelectedValue(newValue);
     setModal(true);
-    console.log(newValue)
   };
 
   const onPanelChange = (newValue: Moment) => {
@@ -64,6 +68,7 @@ const Scheduler: React.FC = () => {
 
   const dateCellRender = (value: Moment) => {
     const listData = getListData(value);
+   
 
     return (
       <>
@@ -88,7 +93,10 @@ const Scheduler: React.FC = () => {
       handleClose={onClose}
       title={selectedValue.format('MMMM D, YYYY')}
     >
-      <div>{selectedValue.toString()}</div>
+      <div>
+        {getDate(selectedValue)?.content.content}
+      </div>
+      
     </AppModal>
   </>
 };

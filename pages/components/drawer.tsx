@@ -22,25 +22,12 @@ export default function ClippedDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar 
-        position="fixed" 
-        sx={{ 
-          boxShadow: 0,
-          zIndex: (theme) => theme.zIndex.drawer + 1 
-        }} >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Drawer
         variant="permanent"
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: { 
-            border: 0,
             width: drawerWidth, 
             boxSizing: 'border-box' },
         }}
@@ -65,10 +52,7 @@ export default function ClippedDrawer() {
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
-        <Toolbar />
-        <Box sx={{ border: 1, borderColor: 'grey.300' }}>
-          <Scheduler/>
-        </Box>
+        <Scheduler/>
       </Box>
     </Box>
   );
