@@ -6,24 +6,33 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import AppModal from './appModal';
 
-const dates = [
+interface EventItemProps{
+  title: string,
+  time?: Moment,
+  description?: string,
+  type: BadgeProps['status'],
+  isAllDay?: boolean
+}
+
+interface EventProps{
+  date: Moment,
+  events: Array<EventItemProps>
+}
+
+const dates: Array<EventProps>  = [
   {
     date: moment().add(1, 'day'),
-    content: { type: 'success', content: 'Shopping' }
-  },
-  {
-    date: moment().add(3, 'days'),
-    content: { type: 'success', content: 'Meeting with clients' }
-  },
-  {
-    date:moment().add(-1, 'week'),
-    content: { type: 'success', content: 'Homework' }
-  },
+    events: [
+      { type: 'success', title: "SampleEvent" },
+      { type: 'error', title: "SampleEvent" },
+      { type: 'warning', title: 'SampleEvent' },
+    ]
+  }
 ]
 
 const getListData = (value: Moment) => {
   const date = dates.find(item => item.date.isSame(value, "date"));
-  if(date) return [date.content];
+  if(date) return [date.events];
   return [];
 };
 
@@ -40,7 +49,7 @@ const Scheduler: React.FC = () => {
   const [modal, setModal] = useState(false);
 
   function getDate<Moment>(date: Moment) {
-    return dates.find(item => item.date.isSame(date, 'date'))
+    return dates.find(i => i.date.isSame(date, 'date'))
   }
 
   const onClose = () => {
@@ -73,7 +82,11 @@ const Scheduler: React.FC = () => {
     return (
       <>
         {listData.map(item => (
-            <Badge status={item.type as BadgeProps['status']} text={item.content} />
+            item.map(obj => (
+              <div>
+                <Badge status={obj.type} text={obj.title} />
+              </div>
+            ))
         ))}
       </>
     );
@@ -93,10 +106,13 @@ const Scheduler: React.FC = () => {
       handleClose={onClose}
       title={selectedValue.format('MMMM D, YYYY')}
     >
-      <div>
-        {getDate(selectedValue)?.content.content}
-      </div>
-      
+     {
+        getDate(selectedValue)?.events.map(item => (
+          <div>
+            <Badge status={item.type} text={item.title} />
+          </div>
+        ))
+      }  
     </AppModal>
   </>
 };

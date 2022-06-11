@@ -16,9 +16,12 @@ a {
   box-sizing: border-box;
 }
 
-.ant-modal-wrap {
+#calendarModal .ant-modal-wrap {
   bottom: unset;
   left: unset;
   overflow: unset;
   right: 40px;
+}
+#calendarModal .ant-picker-content {
+  height: 100vh;
 }

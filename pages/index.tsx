@@ -3,6 +3,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import ClippedDrawer from './components/drawer'
+import Scheduler from './components/calendar';
+
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +15,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ClippedDrawer />
+      <ClippedDrawer>
+        <Scheduler/>
+      </ClippedDrawer>
     </div>
   )
 }

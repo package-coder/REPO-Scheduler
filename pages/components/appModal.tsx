@@ -32,6 +32,7 @@ const CustomModal: React.FC<Props> = (props) => {
   return (
     <>
       <Modal
+        key={'calendarModal'}
         title={
           <div
             style={{
