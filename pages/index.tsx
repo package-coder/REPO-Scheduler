@@ -1,12 +1,35 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import ClippedDrawer from './components/drawer'
 import Scheduler from './components/calendar';
+import moment from 'moment';
+import { useContext, useState } from 'react';
+import { EventContext, EventContextType } from './context/EventProvider';
+import type { Moment } from 'moment';
+
+import { Badge, Card  } from 'antd'
 
 
 const Home: NextPage = () => {
+  const { state } = useContext(EventContext) as EventContextType;
+
+  const [value, setValue] = useState(moment());
+  const [selectedValue, setSelectedValue] = useState(moment());
+
+  const onSelect = (newValue: Moment) => {
+    setValue(newValue);
+    setSelectedValue(newValue);
+  };
+
+  const onPanelChange = (newValue: Moment) => {
+    setValue(newValue);
+  };
+
+  function filterEvents<Moment>(date: Moment) {
+    return state.events?.filter(i => i.date.isSame(date, 'date'))
+  }
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -15,9 +38,28 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ClippedDrawer>
-        <Scheduler/>
-      </ClippedDrawer>
+        <ClippedDrawer renderData={
+          <>
+            {
+              <div style={{ backgroundColor: '#F5F5F5', padding: '1rem' }}>
+                <header>
+                  <h4><strong>{selectedValue.format("MMMM D, YYYY")}</strong></h4>
+                </header>
+                <div>
+                  {
+                    filterEvents(selectedValue)?.map(item => (
+                      <div>
+                        <Badge status={item.type} text={`${item?.time?.format('h:mm a')} - ${item.title}`}/>
+                      </div>                    
+                    ))
+                  }
+                </div>
+              </div>
+            }
+          </>
+        }>
+          <Scheduler value={value} onPanelChange={onPanelChange} onSelect={onSelect} />
+        </ClippedDrawer>
     </div>
   )
 }
