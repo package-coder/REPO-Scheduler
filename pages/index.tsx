@@ -47,8 +47,8 @@ const Home: NextPage = () => {
                 </header>
                 <div>
                   {
-                    filterEvents(selectedValue)?.map(item => (
-                      <div>
+                    filterEvents(selectedValue)?.map((item, key) => (
+                      <div key={key}>
                         <Badge status={item.type} text={`${item?.time?.format('h:mm a')} - ${item.title}`}/>
                       </div>                    
                     ))

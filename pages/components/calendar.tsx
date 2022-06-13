@@ -38,8 +38,8 @@ const Scheduler: React.FC<Props> = (props) => {
    
     return (
       <>
-        {listData?.map(item => (
-          <div>
+        {listData?.map((item, key) => (
+          <div key={key}>
             <Badge status={item.type} text={`${item?.time?.format('h:mm a')} - ${item.title}`}/>
           </div>
         ))}
