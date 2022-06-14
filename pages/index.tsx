@@ -1,14 +1,18 @@
+import { useContext, useState } from 'react';
 import type { NextPage } from 'next'
+
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import ClippedDrawer from './components/drawer'
-import Scheduler from './components/calendar';
+import ClippedDrawer from '../components/ClippedDrawer'
+import Scheduler from '../components/Scheduler';
+
+import { Badge  } from 'antd'
 import moment from 'moment';
-import { useContext, useState } from 'react';
-import { EventContext, EventContextType } from './context/EventProvider';
 import type { Moment } from 'moment';
 
-import { Badge, Card  } from 'antd'
+import { EventContext, EventContextType } from '../contexts/EventProvider';
+
+
 
 
 const Home: NextPage = () => {
@@ -29,6 +33,24 @@ const Home: NextPage = () => {
   function filterEvents<Moment>(date: Moment) {
     return state.events?.filter(i => i.date.isSame(date, 'date'))
   }
+
+  const renderListData = (
+    <div style={{ backgroundColor: '#F5F5F5', padding: '1rem' }}>
+      <header>
+        <h4><strong>{selectedValue.format("MMMM D, YYYY")}</strong></h4>
+      </header>
+      <div>
+        {
+          filterEvents(selectedValue)?.map((item, key) => (
+            <div key={key}>
+              <Badge status={item.type} text={`${item?.time?.format('h:mm a')} - ${item.title}`}/>
+            </div>                    
+          ))
+        }
+      </div>
+    </div>
+  )
+  
   
   return (
     <div className={styles.container}>
@@ -38,26 +60,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-        <ClippedDrawer renderData={
-          <>
-            {
-              <div style={{ backgroundColor: '#F5F5F5', padding: '1rem' }}>
-                <header>
-                  <h4><strong>{selectedValue.format("MMMM D, YYYY")}</strong></h4>
-                </header>
-                <div>
-                  {
-                    filterEvents(selectedValue)?.map((item, key) => (
-                      <div key={key}>
-                        <Badge status={item.type} text={`${item?.time?.format('h:mm a')} - ${item.title}`}/>
-                      </div>                    
-                    ))
-                  }
-                </div>
-              </div>
-            }
-          </>
-        }>
+        <ClippedDrawer renderData={renderListData}>
           <Scheduler value={value} onPanelChange={onPanelChange} onSelect={onSelect} />
         </ClippedDrawer>
     </div>

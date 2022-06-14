@@ -18,7 +18,7 @@ import {
 import { 
   EventContext, 
   EventContextType 
-} from '../context/EventProvider';
+} from '../contexts/EventProvider';
 
 
 

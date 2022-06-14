@@ -19,7 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/components/persistentDrawer.tsx"
+    "components/persistentDrawer.tsx",
+    "components/FullCalendar.jsx"
   ],
   "exclude": ["node_modules"]
 }

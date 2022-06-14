@@ -1,11 +1,8 @@
-import React, { Reducer } from 'react'
+import { Reducer } from 'react'
 import type { Moment } from 'moment';
 import type { BadgeProps } from 'antd';
 
-export interface EventItemType{
-    
-}
-  
+
 export interface EventType{
     date: Moment,
     title: string,
@@ -16,9 +13,9 @@ export interface EventType{
 };
 
 export type EventActionType = 
-    { type: 'REGISTER', payload: EventType } |
-    { type: 'EDIT', payload: { key: Moment, data: EventType } } |
-    { type: 'LOADING' };
+    |   { type: 'REGISTER', payload: EventType } 
+    |   { type: 'EDIT', payload: { key: Moment, data: EventType } }
+    |   { type: 'LOADING' };
 
 export type EventStateType = { events: Array<EventType> }
   

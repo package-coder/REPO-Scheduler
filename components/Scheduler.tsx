@@ -1,7 +1,17 @@
-import { Badge, Calendar } from 'antd';
-import type { Moment } from 'moment';
 import React, { useContext } from 'react';
-import { EventContext, EventContextType } from '../context/EventProvider';
+
+import { 
+  Badge, 
+  Calendar 
+} from 'antd';
+
+import { 
+  EventContext, 
+  EventContextType 
+} from '../contexts/EventProvider';
+
+import type { Moment } from 'moment';
+
 
 interface Props{
   value?: Moment,
@@ -15,22 +25,6 @@ const Scheduler: React.FC<Props> = (props) => {
 
   const getListData = (value: Moment) => {
     return state.events?.filter(item => item.date.isSame(value, "date"));
-  };
-
-  const getMonthData = (value: Moment) => {
-    if (value.month() === 8) {
-      return 1394;
-    }
-  };
-  
-  const monthCellRender = (value: Moment) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
   };
 
   const dateCellRender = (value: Moment) => {
@@ -53,10 +47,7 @@ const Scheduler: React.FC<Props> = (props) => {
       onSelect={props.onSelect} 
       onPanelChange={props.onPanelChange} 
       dateCellRender={dateCellRender} 
-      monthCellRender={monthCellRender} 
     />
-    
-
   </>
 };
 

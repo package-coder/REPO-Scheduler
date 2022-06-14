@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import EventProvider from './context/EventProvider'
+import EventProvider from '../contexts/EventProvider'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return <EventProvider>

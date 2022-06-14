@@ -1,7 +1,18 @@
-import { Button, Modal } from 'antd';
-import React, { useRef, useState } from 'react';
-import type { DraggableData, DraggableEvent } from 'react-draggable';
+import React, { 
+  useRef, 
+  useState 
+} from 'react';
+
+import {  Modal } from 'antd';
+
+import type { 
+  DraggableData, 
+  DraggableEvent 
+} from 'react-draggable';
+
 import Draggable from 'react-draggable';
+
+
 
 interface Props{
   show: boolean,
@@ -10,7 +21,7 @@ interface Props{
   title: string
 }
 
-const CustomModal: React.FC<Props> = (props) => {
+const EventDetailModal: React.FC<Props> = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 });
   const draggleRef = useRef<HTMLDivElement>(null);
@@ -76,4 +87,4 @@ const CustomModal: React.FC<Props> = (props) => {
   );
 };
 
-export default CustomModal;
+export default EventDetailModal;
